@@ -5,10 +5,79 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
 </head>
 <body>
-  <div>Hello World!</div>
+  <div class="container">
+    <div class="header">
+      <img src="./assets/logo.svg" alt="icon of todo list" class="header-logo">
+      <span class="header-text">Todo List</span>
+    </div>
+
+    <div class="projects-container">
+      <h1>Projects</h1>
+
+      <hr>
+      
+      <div class="projects-list">
+        <div class="project selected">
+          <div class="project-name">Unsorted</div>
+        </div>
+        <div class="project">
+          <div class="project-name">Project 1</div>
+          <img src="./assets/close.svg" alt="close button" class="close-btn">
+        </div>
+        <div class="project">
+          <div class="project-name">Project 2</div>
+          <img src="./assets/close.svg" alt="close button" class="close-btn">
+        </div>
+        <div class="project">
+          <div class="project-name">Project 3</div>
+          <img src="./assets/close.svg" alt="close button" class="close-btn">
+        </div>
+      </div>
+
+      <div class="new-project-form">
+        <input type="text" placeholder="New Project" class="new-project-input">
+        <button type="button" class="new-project-btn">+</button>
+      </div>
+    </div>
+
+    <div class="tasks-container">
+      <h1>Todo</h1>
+
+      <hr>
+
+      <div class="todo-list">
+        <div class="todo-item">
+          <h3 class="todo-item-name">Do Laundry</h3>
+          <div class="todo-item-date">1/1/2025</div>
+        </div>
+
+        <div class="todo-item">
+          <h3 class="todo-item-name">Call Mom</h3>
+          <div class="todo-item-date">2/2/2026</div>
+          <div class="todo-item-description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-solid">Edit</button>
+            <button type="button" class="btn btn-outlined">Delete</button>
+          </div>
+        </div>
+
+        <div class="todo-item important">
+          <h3 class="todo-item-name">Save the World</h3>
+          <div class="todo-item-date">3/3/2027</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
