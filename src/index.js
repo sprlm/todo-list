@@ -1,5 +1,5 @@
-import Task from './modules/Task';
+import Todo from './modules/Todo';
 
-let test = new Task('title', 'description','dueDate', 'priority');
+let test = new Todo('title', 'description','dueDate', 'priority');
 
 console.log(test.title);
