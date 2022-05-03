@@ -33,4 +33,12 @@ export default class LogicController {
     console.log(index);
     console.log(this.projects);
   }
+
+  editCurrentIndex = (index) => {
+    this.currentIndex = index;
+  }
+
+  getProjectTodoItems = () => {
+    return this.projects[this.currentIndex].todoItems;
+  }
 }

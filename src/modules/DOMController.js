@@ -45,6 +45,8 @@ const addTodoToDOM = (todo) => {
   editButton.addEventListener('click', (e) => {
     const itemToEdit = e.currentTarget.parentElement.parentElement;
     addTodoFormToDOM(true, getElementIndex(itemToEdit));
+
+    e.stopPropagation();
   });
   buttonRow.appendChild(editButton);
 
@@ -56,6 +58,8 @@ const addTodoToDOM = (todo) => {
     const itemToDelete = e.currentTarget.parentElement.parentElement;
     logic.removeTodoInCurrentProject(getElementIndex(itemToDelete));
     todoList.removeChild(itemToDelete);
+
+    e.stopPropagation();
   });
   buttonRow.appendChild(deleteButton);
 
@@ -78,6 +82,15 @@ const editTodoInDOM = (index, todo) => {
   todoItem.children[0].textContent = todo.title;
   todoItem.children[1].textContent = todo.dueDate;
   todoItem.children[2].textContent = todo.description;
+};
+
+const refreshTodoList = () => {
+  while (todoList.firstChild) {
+      todoList.removeChild(todoList.firstChild);
+  }
+
+  const todos = logic.getProjectTodoItems();
+  todos.forEach((todo) => addTodoToDOM(todo));
 };
 
 const addTodoFormToDOM = (isEdit, editIndex) => {
@@ -235,11 +248,23 @@ const removeTodoFormFromDOM = () => {
   document.body.removeChild(formWrapper);
 };
 
+const changeCurrentProject = (projectDiv) => {
+  const currentSelected = document.querySelector('.project-selected');
+  currentSelected.classList.remove('project-selected');
+
+  projectDiv.classList.add('project-selected');
+
+  logic.editCurrentIndex(getElementIndex(projectDiv));
+
+  refreshTodoList();
+}
+
 const addProjectToDOM = (title) => {
   if (title === '') title = 'Untitled Project';
 
   const projectDiv = document.createElement('div');
   projectDiv.classList.add('project');
+  projectDiv.addEventListener('click', (e) => changeCurrentProject(e.currentTarget));
 
   const projectName = document.createElement('div');
   projectName.classList.add('project-name');
@@ -251,10 +276,19 @@ const addProjectToDOM = (title) => {
   closeBtn.classList.add('close-btn');
   closeBtn.addEventListener('click', (e) => {
     const projectToDelete = e.target.parentElement;
+
+    if (projectToDelete.classList.contains('project-selected')) {
+      const unsorted = document.querySelector('.unsorted');
+      changeCurrentProject(unsorted);
+    };
+
     logic.removeProject(getElementIndex(projectToDelete));
     projectsList.removeChild(projectToDelete);
+
+    e.stopPropagation();
   });
   projectDiv.appendChild(closeBtn);
+
 
   projectsList.appendChild(projectDiv);
 
@@ -262,6 +296,9 @@ const addProjectToDOM = (title) => {
 };
 
 const initializeDOM = () => {
+  const unsorted = document.querySelector('.unsorted');
+  unsorted.addEventListener('click', (e) => changeCurrentProject(e.currentTarget));
+
   const addTodoBtn = document.querySelector('#add-todo-btn');
   addTodoBtn.addEventListener('click', () => addTodoFormToDOM(false));
 
@@ -272,16 +309,9 @@ const initializeDOM = () => {
     addProjectToDOM(title);
   });
 
-  const test1 = new Todo('title1','description','1/1/2022','normal');
-  const test2 = new Todo('title2','description','1/1/2022','high');
-  const test3 = new Todo('title3','description','1/1/2022','normal');
-  addTodoToDOM(test1);
-  addTodoToDOM(test2);
-  addTodoToDOM(test3);
-  logic.pushTodoToCurrentProject(test1);
-  logic.pushTodoToCurrentProject(test2);
-  logic.pushTodoToCurrentProject(test3);
+  const sample = new Todo('Sample Todo (Click me!)','Hello! This is a sample description.','01/01/2030','normal');
+  addTodoToDOM(sample);
+  logic.pushTodoToCurrentProject(sample);
 };
 
 export default initializeDOM;
-
