@@ -1,4 +1,7 @@
+import Project from './Project';
+
 export default class LogicController {
+  projects = [];
   todoItems = [];
 
   addTodo = (todo) => {

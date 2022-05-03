@@ -1,5 +1,6 @@
 import { format, parse } from 'date-fns';
 import LogicController from './LogicController';
+import Project from './Project';
 import Todo from './Todo';
 
 const logic = new LogicController();
