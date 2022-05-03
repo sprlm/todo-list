@@ -46,7 +46,7 @@ body {
   width: 50px;
 }
 
-.projects-container, .todo-container {
+.projects-container, .todo-container, .form-container {
   padding: 24px;
   border-radius: 16px;
   background-color: white;
@@ -179,7 +179,7 @@ hr {
   border: 2px solid var(--important);
 }
 
-.todo-item-name {
+.todo-item-title {
   flex: 1;
 }
 
@@ -190,6 +190,8 @@ hr {
 .btn-row {
   justify-self: flex-end;
   align-self: flex-end;
+  display: flex;
+  gap: 8px;
 }
 
 .btn {
@@ -217,4 +219,69 @@ hr {
 
 .btn-outlined {
   color: var(--primary)
+}
+
+.hidden {
+  display: none;
+}
+
+.form-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.form-container {
+  width: 400px;
+}
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#todo-form-btn {
+  align-self: flex-end;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.title-input,
+textarea {
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid var(--shadow-dark);
+  border-radius: 4px;
+  padding: 8px;
+  font-family: 'Radio Canada', sans-serif;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type="date"],
+select {
+  height: 25px;
+}
+
+.form-row {
+  display: flex;
+  gap: 24px;
 }
