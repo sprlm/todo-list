@@ -40,6 +40,10 @@ const addTodoToDOM = (todo) => {
   editButton.type = 'button';
   editButton.classList.add('btn', 'btn-solid');
   editButton.textContent = 'Edit';
+  editButton.addEventListener('click', (e) => {
+    const itemToEdit = e.currentTarget.parentElement.parentElement;
+    addTodoFormToDOM(true, getElementIndex(itemToEdit));
+  });
   buttonRow.appendChild(editButton);
 
   const deleteButton = document.createElement('button');
@@ -48,7 +52,7 @@ const addTodoToDOM = (todo) => {
   deleteButton.textContent = 'Delete';
   deleteButton.addEventListener('click', (e) => {
     const itemToDelete = e.currentTarget.parentElement.parentElement;
-    logic.removeTodoAt(getElementIndex(itemToDelete));
+    logic.removeTodo(getElementIndex(itemToDelete));
     todoList.removeChild(itemToDelete);
   });
   buttonRow.appendChild(deleteButton);
@@ -63,12 +67,18 @@ const addTodoToDOM = (todo) => {
   todoList.appendChild(todoItem);
 };
 
-const removeTodoFormFromDOM = () => {
-  const formWrapper = document.querySelector('.form-wrapper');
-  document.body.removeChild(formWrapper);
+const editTodoInDOM = (index, todo) => {
+  const todoItem = todoList.children[index];
+
+  (todo.priority === 'high') ? 
+    todoItem.classList.add('important') : todoItem.classList.remove('important');
+  
+  todoItem.children[0].textContent = todo.title;
+  todoItem.children[1].textContent = todo.dueDate;
+  todoItem.children[2].textContent = todo.description;
 };
 
-const addTodoFormToDOM = () => {
+const addTodoFormToDOM = (isEdit, editIndex) => {
   const formWrapper = document.createElement('div');
   formWrapper.classList.add('form-wrapper');
 
@@ -196,12 +206,18 @@ const addTodoFormToDOM = () => {
 
       const todo = new Todo(title, description, dueDate, priority);
 
-      addTodoToDOM(todo);
-      logic.addTodo(todo);
+      if (isEdit) {
+        editTodoInDOM(editIndex, todo);
+        logic.editTodo(editIndex, todo);
+      } else {
+        addTodoToDOM(todo);
+        logic.addTodo(todo);
+      }
 
       removeTodoFormFromDOM();
     }
   });
+  
   todoForm.appendChild(todoFormBtn);
 
   formContainer.appendChild(todoForm);
@@ -211,9 +227,14 @@ const addTodoFormToDOM = () => {
   document.body.appendChild(formWrapper);
 };
 
+const removeTodoFormFromDOM = () => {
+  const formWrapper = document.querySelector('.form-wrapper');
+  document.body.removeChild(formWrapper);
+};
+
 const initializeDOM = () => {
   const addTodoBtn = document.querySelector('#add-todo-btn');
-  addTodoBtn.addEventListener('click', addTodoFormToDOM);
+  addTodoBtn.addEventListener('click', () => addTodoFormToDOM(false));
 
   const test1 = new Todo('title1','description','1/1/2022','normal');
   const test2 = new Todo('title2','description','1/1/2022','high');
