@@ -19,4 +19,16 @@ export default class Project {
   set todoItems(value) {
     this._todoItems = value;
   }
+
+  pushTodo = (todo) => {
+    this.todoItems.push(todo);
+  }
+
+  editTodo = (index, todo) => {
+    this.todoItems[index] = todo;
+  }
+
+  removeTodo = (index) => {
+    this.todoItems.splice(index, 1);
+  }
 }

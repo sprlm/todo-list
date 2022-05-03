@@ -53,7 +53,7 @@ const addTodoToDOM = (todo) => {
   deleteButton.textContent = 'Delete';
   deleteButton.addEventListener('click', (e) => {
     const itemToDelete = e.currentTarget.parentElement.parentElement;
-    logic.removeTodo(getElementIndex(itemToDelete));
+    logic.removeTodoInCurrentProject(getElementIndex(itemToDelete));
     todoList.removeChild(itemToDelete);
   });
   buttonRow.appendChild(deleteButton);
@@ -210,10 +210,10 @@ const addTodoFormToDOM = (isEdit, editIndex) => {
 
       if (isEdit) {
         editTodoInDOM(editIndex, todo);
-        logic.editTodo(editIndex, todo);
+        logic.editTodoInCurrentProject(editIndex, todo);
       } else {
         addTodoToDOM(todo);
-        logic.addTodo(todo);
+        logic.pushTodoToCurrentProject(todo);
       }
 
       removeTodoFormFromDOM();
@@ -244,9 +244,9 @@ const initializeDOM = () => {
   addTodoToDOM(test1);
   addTodoToDOM(test2);
   addTodoToDOM(test3);
-  logic.addTodo(test1);
-  logic.addTodo(test2);
-  logic.addTodo(test3);
+  logic.pushTodoToCurrentProject(test1);
+  logic.pushTodoToCurrentProject(test2);
+  logic.pushTodoToCurrentProject(test3);
 };
 
 export default initializeDOM;

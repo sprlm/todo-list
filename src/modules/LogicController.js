@@ -2,20 +2,24 @@ import Project from './Project';
 
 export default class LogicController {
   projects = [];
-  todoItems = [];
+  currentIndex = 0;
 
-  addTodo = (todo) => {
-    this.todoItems.push(todo);
-    console.log(this.todoItems);
+  constructor() {
+    const unsorted = new Project('unsorted');
+
+    this.projects = [unsorted];
+    this.currentIndex = 0;
   }
 
-  editTodo = (index, todo) => {
-    this.todoItems[index] = todo;
-    console.log(this.todoItems);
+  pushTodoToCurrentProject = (todo) => {
+    this.projects[this.currentIndex].pushTodo(todo);
   }
 
-  removeTodo = (index) => {
-    this.todoItems.splice(index, 1);
-    console.log(this.todoItems);
+  editTodoInCurrentProject = (index, todo) => {
+    this.projects[this.currentIndex].editTodo(index, todo);
+  }
+
+  removeTodoInCurrentProject = (index) => {
+    this.projects[this.currentIndex].removeTodo(index);
   }
 }
