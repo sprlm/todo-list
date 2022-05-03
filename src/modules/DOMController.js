@@ -152,6 +152,7 @@ const addTodoFormToDOM = (isEdit, editIndex) => {
 
   const dueDateInput = document.createElement('input');
   dueDateInput.setAttribute('required', '');
+  dueDateInput.setAttribute('min', new Date().toISOString().slice(0,10));
   dueDateInput.type = 'date';
   dueDateInput.name = 'due-date';
   dueDateInput.id = 'due-date';
