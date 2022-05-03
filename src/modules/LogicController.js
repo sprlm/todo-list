@@ -5,7 +5,7 @@ export default class LogicController {
   currentIndex = 0;
 
   constructor() {
-    const unsorted = new Project('unsorted');
+    const unsorted = new Project('Unsorted');
 
     this.projects = [unsorted];
     this.currentIndex = 0;
@@ -21,5 +21,16 @@ export default class LogicController {
 
   removeTodoInCurrentProject = (index) => {
     this.projects[this.currentIndex].removeTodo(index);
+  }
+
+  pushProject = (project) => {
+    this.projects.push(project);
+    console.log(this.projects);
+  }
+
+  removeProject = (index) => {
+    this.projects.splice(index, 1);
+    console.log(index);
+    console.log(this.projects);
   }
 }

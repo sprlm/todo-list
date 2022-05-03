@@ -5,6 +5,7 @@ import Todo from './Todo';
 
 const logic = new LogicController();
 const todoList = document.querySelector('.todo-list');
+const projectsList = document.querySelector('.projects-list');
 
 const getElementIndex = (node) => {
   let index = 0;
@@ -234,9 +235,42 @@ const removeTodoFormFromDOM = () => {
   document.body.removeChild(formWrapper);
 };
 
+const addProjectToDOM = (title) => {
+  if (title === '') title = 'Untitled Project';
+
+  const projectDiv = document.createElement('div');
+  projectDiv.classList.add('project');
+
+  const projectName = document.createElement('div');
+  projectName.classList.add('project-name');
+  projectName.textContent = title;
+  projectDiv.appendChild(projectName);
+
+  const closeBtn = document.createElement('img');
+  closeBtn.src = './assets/close.svg';
+  closeBtn.classList.add('close-btn');
+  closeBtn.addEventListener('click', (e) => {
+    const projectToDelete = e.target.parentElement;
+    logic.removeProject(getElementIndex(projectToDelete));
+    projectsList.removeChild(projectToDelete);
+  });
+  projectDiv.appendChild(closeBtn);
+
+  projectsList.appendChild(projectDiv);
+
+  logic.pushProject(new Project(title));
+};
+
 const initializeDOM = () => {
   const addTodoBtn = document.querySelector('#add-todo-btn');
   addTodoBtn.addEventListener('click', () => addTodoFormToDOM(false));
+
+  const newProjectBtn = document.querySelector('#new-project-btn');
+  newProjectBtn.addEventListener('click', () => {
+    const title = document.querySelector('.new-project-input').value;
+    document.querySelector('.new-project-input').value = '';
+    addProjectToDOM(title);
+  });
 
   const test1 = new Todo('title1','description','1/1/2022','normal');
   const test2 = new Todo('title2','description','1/1/2022','high');
