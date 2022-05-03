@@ -1,5 +1,3 @@
-import Todo from './modules/Todo';
+import initializeDOM from './modules/DOMController';
 
-let test = new Todo('title', 'description','dueDate', 'priority');
-
-console.log(test.title);
+initializeDOM();
