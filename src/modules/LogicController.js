@@ -1,3 +1,4 @@
+import { loadProjects, saveProjects } from './Storage';
 import Project from './Project';
 
 export default class LogicController {
@@ -13,25 +14,31 @@ export default class LogicController {
 
   pushTodoToCurrentProject = (todo) => {
     this.projects[this.currentIndex].pushTodo(todo);
+    saveProjects(this.projects);
   }
 
   editTodoInCurrentProject = (index, todo) => {
     this.projects[this.currentIndex].editTodo(index, todo);
+    saveProjects(this.projects);
   }
 
   removeTodoInCurrentProject = (index) => {
     this.projects[this.currentIndex].removeTodo(index);
+    saveProjects(this.projects);
   }
 
   pushProject = (project) => {
     this.projects.push(project);
-    console.log(this.projects);
+    saveProjects(this.projects);
+  }
+
+  getProjects = () => {
+    return this.projects;
   }
 
   removeProject = (index) => {
     this.projects.splice(index, 1);
-    console.log(index);
-    console.log(this.projects);
+    saveProjects(this.projects);
   }
 
   editCurrentIndex = (index) => {
@@ -40,5 +47,13 @@ export default class LogicController {
 
   getProjectTodoItems = () => {
     return this.projects[this.currentIndex].todoItems;
+  }
+
+  initializeProjects = () => {
+    if (!loadProjects()) {
+      this.projects = [new Project('Unsorted')];
+    } else {
+    this.projects = loadProjects();
+    }
   }
 }

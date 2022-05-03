@@ -248,6 +248,20 @@ const removeTodoFormFromDOM = () => {
   document.body.removeChild(formWrapper);
 };
 
+const refreshProjectList = () => {
+  while (projectsList.firstChild) {
+    projectsList.removeChild(projectsList.lastChild);
+  }
+
+  const projects = logic.getProjects();
+  projects.forEach((project) => {
+    addProjectToDOM(project.title);
+  });
+
+  projectsList.children[0].classList.add('project-selected', 'unsorted');
+  projectsList.children[0].removeChild(projectsList.children[0].lastChild);
+}
+
 const changeCurrentProject = (projectDiv) => {
   const currentSelected = document.querySelector('.project-selected');
   currentSelected.classList.remove('project-selected');
@@ -291,11 +305,14 @@ const addProjectToDOM = (title) => {
 
 
   projectsList.appendChild(projectDiv);
-
-  logic.pushProject(new Project(title));
 };
 
 const initializeDOM = () => {
+  logic.initializeProjects();
+
+  refreshProjectList();
+  refreshTodoList();
+
   const unsorted = document.querySelector('.unsorted');
   unsorted.addEventListener('click', (e) => changeCurrentProject(e.currentTarget));
 
@@ -307,11 +324,8 @@ const initializeDOM = () => {
     const title = document.querySelector('.new-project-input').value;
     document.querySelector('.new-project-input').value = '';
     addProjectToDOM(title);
+    logic.pushProject(new Project(title));
   });
-
-  const sample = new Todo('Sample Todo (Click me!)','Hello! This is a sample description.','01/01/2030','normal');
-  addTodoToDOM(sample);
-  logic.pushTodoToCurrentProject(sample);
 };
 
 export default initializeDOM;
